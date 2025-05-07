@@ -1,0 +1,487 @@
+{
+    "uuid": "e94a4170-6ef6-4b0a-978d-be91893e9a64",
+    "lastMigration": 27,
+    "name": "FRInteroperability",
+    "endpointPrefix": "",
+    "latency": 0,
+    "port": 3003,
+    "hostname": "",
+    "routes": [
+      {
+        "uuid":"003b7329-926a-4b8b-9bf4-eabdd9733dff",
+        "documentation": "Search specific person",
+        "method": "post",
+        "endpoint": "fr/sync/search",
+        "request": {
+          "body": {
+            "identifier_value": "M123456"  
+          },
+          "rules": [
+            {
+              "key": "body.identifier_value",
+              "operator": "exists",
+              "value": "true"
+            },
+            {
+              "key": "body.identifier_value",
+              "operator": "matches",
+              "value": "^[0-9]{9}$" 
+            }
+          ],
+          "rulesOperator": "AND"
+        },
+        "responses": [
+          {
+            "uuid": "e14155cf-b6f8-4367-2fg3-7dddba2d9c13",
+            "body": "{\n\"message\": {\n\"transaction_id\": \"txn-9876543210\",\n\"message\": {\n\"timestamp\": \"2024-08-11T10:00:00.000Z\",\n\"correlation_id\": \"1234567890\",\n\"search_response\": [\n{\n\"reference_id\": \"12345678901234567890\",\n\"timestamp\": \"\",\n\"status\": \"rcvd\",\n\"status_reason_code\": \"rjct.reference_id.invalid\",\n\"status_reason_message\": \"string\",\n\"data\": {\n\"version\": \"1.0.0\",\n\"reg_type\": \"ns:org:RegistryType:FR\",\n\"reg_event_type\": \"spdci-common:RegistryEventType:Farmer\",\n\"reg_record_type\": \"spdci-extensions-dci:Farmer\",\n\"reg_records\": {\n\"type\": \"array\",\n\"example\": [\n{\n\"famer_personal_details\": {\n\"member_identifier\": {\n\"identifier_type\": \"NationalID\",\n\"identifier_value\": \"M123456\"\n},\n\"demographic_info\": {\n\"identifier\": {\n\"identifier_type\": \"NationalID\",\n\"identifier_value\": \"M123456\"\n},\n\"name\": {\n\"first_name\": \"John\",\n\"last_name\": \"Doe\"\n},\n\"date_of_birth\": \"1990-05-15T00:00:00Z\",\n\"gender\": \"Male\"\n}\n},\n\"family_details\": {\n\"group_identifier\": [\n{\n\"identifier_type\": \"NationalID\",\n\"identifier_value\": \"G9876543210\"\n}\n],\n\"group_type\": \"family\",\n\"poverty_score\": 45.2,\n\"poverty_score_type\": \"income-based\",\n\"group_head_info\": {\n\"member_identifier\": [\n{\n\"identifier_type\": \"NationalID\",\n\"identifier_value\": \"M123456\"\n}\n],\n\"demographic_info\": {\n\"identifier\": {\n\"identifier_type\": \"NationalID\",\n\"identifier_value\": \"M123456\"\n},\n\"name\": {\n\"first_name\": \"John\",\n\"last_name\": \"Doe\"\n},\n\"date_of_birth\": \"1990-05-15T00:00:00Z\",\n\"gender\": \"Male\"\n},\n\"is_disabled\": false,\n\"marital_status\": \"married\",\n\"registration_date\": \"1990-06-10T08:00:00Z\"\n},\n\"group_size\": 2,\n\"member_list\": [\n{\n\"member_identifier\": [\n{\n\"@type\": \"Identifier\",\n\"identifier_type\": \"NationalID\",\n\"identifier_value\": \"M9876543210\"\n}\n],\n\"demographic_info\": {\n\"spdci:identifier\": [\n{\n\"@type\": \"Identifier\",\n\"identifier_type\": \"NationalID\",\n\"identifier_value\": \"1234567890\"\n}\n],\n\"name\": {\n\"@type\": \"Name\",\n\"surname\": \"Doe\",\n\"given_name\": \"Jane\",\n\"prefix\": \"Mr.\",\n\"suffix\": \"\"\n},\n\"sex\": \"female\",\n\"birth_date\": \"1982-03-15T00:00:00Z\",\n\"registration_date\": \"2022-01-10T08:00:00Z\"\n},\n\"is_disabled\": false,\n\"marital_status\": \"married\",\n\"registration_date\": \"2022-01-10T08:00:00Z\"\n}\n],\n\"registration_date\": \"2022-01-10T08:00:00Z\",\n\"last_updated\": \"2023-06-15T10:00:00Z\"\n},\n\"farm_details\": [\n{\n\"place\": {\n\"name\": \"Koh Samui\",\n\"geo\": {\n\"@type\": \"spdci:GeoLocation\",\n\"latitude\": 9.5604,\n\"longitude\": 100.0245\n}\n},\n\"land_tenure\": \"Leased (Rented from someone else)\",\n\"land_size\": 3000,\n\"measurement\": \"Acre\",\n\"farm_type\": \"Small subsistence-oriented farms\",\n\"farming_activities\": [\n{\n\"crop_production\": [\n{\n\"activity_group\": \"perennial crops\",\n\"crop_type\": \"Fruit and nuts\",\n\"variety\": \"local\",\n\"season\": \"winter\",\n\"end_use\": [\n\"Food for human consumption\"\n],\n\"irrigation\": true,\n\"irrigation_water\": [\n\"Mixed surface water and groundwater\"\n],\n\"fertilizer_type\": [\n\"Organic fertilizers\"\n],\n\"registration_date\": \"2023-01-10T00:00:00Z\",\n\"last_updated\": \"2023-09-20T00:00:00Z\"\n}\n],\n\"animal_production\": [\n{\n\"type\": \"Sheep and goats\",\n\"count\": 10,\n\"livestock_system\": \"Mixed system\",\n\"registration_date\": \"2023-01-10T00:00:00Z\",\n\"last_updated\": \"2023-09-20T00:00:00Z\"\n}\n],\n\"mixed_farming\": true,\n\"agri_support_activities\": [\n\"Support activities for crop production\"\n],\n\"aqua_support_activities\": \"Support activities for fishing and aquaculture\",\n\"aqua_culture\": [\n\"Marine aquafarming\"\n],\n\"agroforestry\": [\n\"Reforestation (replanting trees)\"\n],\n\"registration_date\": \"2023-06-15T08:00:00Z\",\n\"last_updated\": \"2023-06-15T10:00:00Z\"\n}\n],\n\"registration_date\": \"2022-01-10T08:00:00Z\",\n\"last_updated\": \"2023-06-15T10:00:00Z\"\n}\n],\n\"machineries_details\": [\n{\n\"type\": \"Machine powered equipment\",\n\"count\": 2,\n\"equipement_source\": \"Provided by a cooperative\",\n\"registration_date\": \"2022-01-10T08:00:00Z\",\n\"last_updated\": \"2023-06-15T10:00:00Z\"\n}\n],\n\"registration_date\": \"2023-01-10T00:00:00Z\",\n\"last_updated\": \"2023-09-20T00:00:00Z\"\n}\n]\n}\n},\n\"pagination\": {},\n\"locale\": \"en\"\n}\n]\n}\n}\n}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "Search FR",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+              {
+                "key": "body",
+                "operator": "contains",
+                "value": "\"identifier_value\": \"847951632\""
+              }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": true,
+            "default": false
+          }      
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"003b7339-926a-4b8b-9bf4-eabdd9733dff",
+        "documentation": "Get transaction status",
+        "method": "post",
+        "endpoint": "fr/sync/txn/status",
+        "responses": [
+          {
+            "uuid": "e14155cf-b6f8-4367-2fg3-7dddba2d9c13",
+            "body": "{\n    \"transaction_id\": 123456789,\n    \"correlation_id\": \"9876543210\",\n    \"txnstatus_response\": {\n      \"type\": \"object\",\n      \"description\": \"Response to search request. Multiple repsonses for each page can be pushed to the caller as an implementation!\",\n      \"properties\": {\n        \"transaction_id\": {\n          \"$ref\": \"#/components/schemas/TransactionId\"\n        },\n        \"correlation_id\": {\n          \"description\": \"1. correlation_id acknowledged by end txn processing system (i.e receiver) to co-relate all related requests in the context of a business transaction.\\n2. correlation_id uniqueness is ensured by txn processing system (i.e receiver)\\n\",\n          \"type\": \"string\",\n          \"maxLength\": 99,\n          \"example\": \"9876543210\"\n        },\n        \"search_response\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"reference_id\": {\n                \"$ref\": \"#/components/schemas/ReferenceId\"\n              },\n              \"timestamp\": {\n                \"$ref\": \"#/components/schemas/DateTime\"\n              },\n              \"status\": {\n                \"$ref\": \"#/components/schemas/RequestStatus\"\n              },\n              \"status_reason_code\": {\n                \"$ref\": \"#/components/schemas/SearchStatusReasonCode\"\n              },\n              \"status_reason_message\": {\n                \"description\": \"Status reason code message. Helps actionanble messaging for systems/end users\",\n                \"type\": \"string\",\n                \"maxLength\": 999\n              },\n              \"data\": {\n                \"type\": \"object\",\n                \"description\": \"Search result record as an outcome of search/subscribe action\\n\",\n                \"properties\": {\n                  \"version\": {\n                    \"type\": \"string\",\n                    \"default\": \"1.0.0\"\n                  },\n                  \"reg_type\": {\n                    \"$ref\": \"#/components/schemas/RegistryType\"\n                  },\n                  \"reg_event_type\": {\n                    \"$ref\": \"#/components/schemas/RegistryEventType\"\n                  },\n                  \"reg_record_type\": {\n                    \"$ref\": \"#/components/schemas/RegistryRecordType\"\n                  },\n                  \"reg_records\": {\n                    \"$ref\": \"#/components/schemas/RegistryRecord\"\n                  }\n                },\n                \"required\": [\n                  \"reg_record_type\",\n                  \"reg_records\"\n                ]\n              },\n              \"pagination\": {\n                \"$ref\": \"#/components/schemas/Pagination\"\n              },\n              \"locale\": {\n                \"$ref\": \"#/components/schemas/LanguageCode\"\n              }\n            },\n            \"required\": [\n              \"reference_id\",\n              \"timestamp\",\n              \"status\"\n            ]\n          }\n        }\n      },\n      \"required\": [\n        \"transaction_id\",\n        \"correlation_id\",\n        \"search_response\"\n      ]\n    }\n  }\n",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "search transaction status",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+                
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid": "003b7340-926b-4b8b-9bf4-eabdd9733dff",
+        "documentation": "Async search",
+        "method": "post",
+        "endpoint": "fr/search",
+        "responses": [
+          {
+            "uuid": "e14155cf-b6f8-4367-2fg3-7dddba2d9c14",
+            "body": "{\n  \"transaction_id\": 134567890,\n  \"correlation_id\": \"9876543210\",\n  \"search_response\": {\n    \"status\": \"pending\",\n    \"message\": \"Search request is being processed asynchronously.\"\n  }\n}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "Async search initiated",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid": "003b7341-926b-4b8b-9bf4-eabdd9733dff",
+        "documentation": "Async on-search",
+        "method": "post",
+        "endpoint": "fr/on-search",
+        "responses": [
+          {
+            "uuid": "e14155cf-b6f8-4367-2fg3-7dddba2d9c15",
+            "body": "{\n  \"message\": {\n    \"ack_status\": \"ACK\",\n    \"timestamp\": \"\",\n    \"error\": {\n      \"code\": \"err.request.bad\",\n      \"message\": \"string\"\n    },\n    \"correlation_id\": \"9876543210\"\n  }\n}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "Async search result",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"004a7331-926b-4b5b-9bf4-eabdd9733dff",
+        "documentation": "subscribe to an event",
+        "method": "post",
+        "endpoint": "fr/subscribe",
+        "responses": [
+          {
+            "uuid": "e1e15dcf-b6f8-43d7-2fg3-7dddbcfd9c13",
+            "body": "{\"message\":{\"ack_status\":\"ACK\",\"timestamp\":\"\",\"error\":{\"code\":\"err.request.bad\",\"message\":\"string\"},\"correlation_id\":\"9876543210\"}}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "subscribe to specific event",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+                {
+                    "target": "body",
+                    "modifier": "transaction_id",
+                    "value": "123456789",
+                    "invert": false,
+                    "operator": "equals"
+                }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"004a8331-926b-4b5b-9bf4-eabdd9733dff",
+        "documentation": "callback for subscribe to an event",
+        "method": "post",
+        "endpoint": "fr/on-subscribe",
+        "responses": [
+          {
+            "uuid": "e1e15dcf-b6f8-43d7-2fg3-7dddbcfd9c13",
+            "body": "{\"message\":{\"ack_status\":\"ACK\",\"timestamp\":\"\",\"error\":{\"code\":\"err.request.bad\",\"message\":\"string\"},\"correlation_id\":\"9876543210\"}}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "subscribe to specific event",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+                {
+                    "target": "body",
+                    "modifier": "transaction_id",
+                    "value": "123456789",
+                    "invert": false,
+                    "operator": "equals"
+                }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"004a8431-926b-4b5b-9bf4-eabdd9733dff",
+        "documentation": "unsubscribe from an event",
+        "method": "post",
+        "endpoint": "fr/unsubscribe",
+        "responses": [
+          {
+            "uuid": "e1e14rcf-b6f8-43d7-2fg3-7dddbcfd9c13",
+            "body": "{\"message\":{\"ack_status\":\"ACK\",\"timestamp\":\"\",\"error\":{\"code\":\"err.request.bad\",\"message\":\"string\"},\"correlation_id\":\"9876543210\"}}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "subscribe to specific event",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+                {
+                    "target": "body",
+                    "modifier": "transaction_id",
+                    "value": "123456789",
+                    "invert": false,
+                    "operator": "equals"
+                }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"004a8431-926b-4b5b-9bf4-eabdd9733dff",
+        "documentation": "on unsubscribe from an event",
+        "method": "post",
+        "endpoint": "fr/on-unsubscribe",
+        "responses": [
+          {
+            "uuid": "e1e14rcf-b6f8-43d7-2fg3-7dddbcfd9c13",
+            "body": "{\"message\":{\"ack_status\":\"ACK\",\"timestamp\":\"\",\"error\":{\"code\":\"err.request.bad\",\"message\":\"string\"},\"correlation_id\":\"9876543210\"}}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "subscribe to specific event",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+                {
+                    "target": "body",
+                    "modifier": "transaction_id",
+                    "value": "123456789",
+                    "invert": false,
+                    "operator": "equals"
+                }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"004a9431-926b-4b5b-9bf4-eabdd9733dff",
+        "documentation": "on checking a transaction status (callback)",
+        "method": "post",
+        "endpoint": "fr/txn/on-status",
+        "responses": [
+          {
+            "uuid": "e1e14rcf-b6f8-43d7-2fg3-7dddbcfd9c13",
+            "body": "{\"message\":{\"ack_status\":\"ACK\",\"timestamp\":\"\",\"error\":{\"code\":\"err.request.bad\",\"message\":\"string\"},\"correlation_id\":\"9876543210\"}}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "subscribe to specific event",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+                {
+                    "target": "body",
+                    "modifier": "transaction_id",
+                    "value": "123456789",
+                    "invert": false,
+                    "operator": "equals"
+                }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"004a9431-926b-5b5b-9bf4-eabdd9733dff",
+        "documentation": "checking a transaction status",
+        "method": "post",
+        "endpoint": "fr/txn/status",
+        "responses": [
+          {
+            "uuid": "e1e14rcf-b6f8-43d7-2fg3-7dddbcfd9c13",
+            "body": "{\"message\":{\"ack_status\":\"ACK\",\"timestamp\":\"\",\"error\":{\"code\":\"err.request.bad\",\"message\":\"string\"},\"correlation_id\":\"9876543210\"}}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "subscribe to specific event",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+                {
+                    "target": "body",
+                    "modifier": "transaction_id",
+                    "value": "123456789",
+                    "invert": false,
+                    "operator": "equals"
+                }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      }
+
+    ],
+    "proxyMode": false,
+    "proxyHost": "",
+    "proxyRemovePrefix": false,
+    "tlsOptions": {
+      "enabled": false,
+      "type": "CERT",
+      "pfxPath": "",
+      "certPath": "",
+      "keyPath": "",
+      "caPath": "",
+      "passphrase": ""
+    },
+    "cors": true,
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "proxyReqHeaders": [
+      {
+        "key": "",
+        "value": ""
+      }
+    ],
+    "proxyResHeaders": [
+      {
+        "key": "",
+        "value": ""
+      }
+    ],
+    "data": [],
+    "folders": [],
+    "rootChildren": [
+      {
+        "type": "route",
+        "uuid": "003b7329-926a-4b8b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid": "003b7339-926a-4b8b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"003b7340-926b-4b8b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"003b7341-926b-4b8b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"004a7331-926b-4b5b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"004a8331-926b-4b5b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"004a8431-926b-4b5b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"004a9431-926b-4b5b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"004a9431-926b-5b5b-9bf4-eabdd9733dff"
+      }
+    ]
+  }
