@@ -1,17 +1,19 @@
 version: '3.3'
 
 services:
-  test-app:
-    image: fr-api-image
-    ports:
-      - 3333:3003
-    networks:
-      - web
+  fr-mocks:
+    image: dci-fr-mocks
     build:
       context: .
       dockerfile: ./Dockerfile
-    volumes:
-      - ./mockoon-fr.json:/mockoon-fr.json
+    ports:
+      - "3333:3003" # FR registry endpoints (search, subscribe, txn/status, ...)
+      - "3334:3004" # SP callback endpoints (on-search, notify, ...)
+    extra_hosts:
+      # lets the mock call back the test runner's listener (header.sender_uri)
+      - "host.docker.internal:host-gateway"
+    networks:
+      - web
 
 networks:
   web:
