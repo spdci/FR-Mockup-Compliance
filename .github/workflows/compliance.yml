@@ -1,7 +1,8 @@
 # Runs the DCI FR compliance suite against the bundled Mockoon mocks and publishes the results:
 #  - a check run with one annotation per failed scenario (JUnit), and a job summary
 #  - the HTML / JUnit / Cucumber messages reports as a build artifact
-#  - on main, the HTML report on GitHub Pages (Settings > Pages > Source: GitHub Actions)
+#  - on main, a GitHub Pages site with the HTML report and a Swagger UI of the FR API
+#    (Settings > Pages > Source: GitHub Actions); on pull requests the same site as an artifact
 name: FR compliance
 
 on:
@@ -104,15 +105,23 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
-      - name: Prepare the Pages site
-        if: always() && hashFiles('test/result/fr-compliance.html') != ''
+      - name: Build the site (landing page, test report, Swagger UI)
+        if: always() && steps.cucumber.outcome != 'skipped'
+        working-directory: .
         run: |
-          mkdir -p "$RUNNER_TEMP/site"
-          cp "result/${REPORT_NAME}.html" "$RUNNER_TEMP/site/index.html"
-          cp "result/${REPORT_NAME}.xml" "$RUNNER_TEMP/site/"
+          node site/build-site.mjs --out "$RUNNER_TEMP/site" \
+            --report "test/result/${REPORT_NAME}.html" --junit "test/result/${REPORT_NAME}.xml"
+
+      - name: Upload the site (preview)
+        if: always() && hashFiles('test/result/fr-compliance.xml') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: fr-compliance-site
+          path: ${{ runner.temp }}/site
+          retention-days: 14
 
       - name: Upload the Pages site
-        if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && hashFiles('test/result/fr-compliance.html') != ''
+        if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.cucumber.outcome != 'skipped'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ runner.temp }}/site
