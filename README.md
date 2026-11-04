@@ -173,7 +173,18 @@ Reports are written to `test/result` (HTML, JUnit XML, Cucumber messages).
 |---|---|
 | Compliance suite (mocks) | Checks `mockoon-*.json` are up to date with `mock/generate-mocks.mjs`, starts the mocks, runs the suite and publishes the results: the **FR compliance results** check (one annotation per failed scenario), a summary comment on pull requests, and the `fr-compliance-report` artifact (HTML, JUnit XML, Cucumber messages) |
 | Docker images | Builds the mock and test-runner images and runs the suite with `docker compose`, as documented above (`fr-compliance-report-docker` artifact) |
-| Publish report to GitHub Pages | On `main` only: publishes the latest HTML report. Requires Settings > Pages > Source: **GitHub Actions** |
+| Publish report to GitHub Pages | On `main` only: publishes the site (see below). Requires Settings > Pages > Source: **GitHub Actions** |
+
+The published site (`site/build-site.mjs`; on pull requests it is attached as the `fr-compliance-site` artifact) has:
+
+- a landing page with the results of the latest run;
+- `report/`: the Cucumber HTML report and JUnit results;
+- `api/`: a Swagger UI with two definitions: the **DCI FR API v1.0.0** as published
+  (`docs/openapi/fr_api_v1.0.0.yaml`, from spdci/api-standards `release/yaml`, commit `ce1f22c`), and the
+  **FR mock**, the same API on the mock paths (`/fr/...`) and ports (3333 FR side, 3334 SP side). Start
+  the mocks locally and use "Try it out" to send requests to them (`api/?spec=mock` opens it directly).
+
+Build it locally with `node site/build-site.mjs --out _site --report test/result/<name>.html --junit test/result/<name>.xml`.
 
 ### Testing your own implementation
 
