@@ -164,6 +164,17 @@ cd test && npm install && npx cucumber-js
 
 Reports are written to `test/result` (HTML, JUnit XML, Cucumber messages).
 
+### Continuous integration
+
+`.github/workflows/compliance.yml` runs on every pull request, on pushes to `main` and on demand
+(Actions > FR compliance > Run workflow, with an optional Cucumber tag expression):
+
+| Job | What it does |
+|---|---|
+| Compliance suite (mocks) | Checks `mockoon-*.json` are up to date with `mock/generate-mocks.mjs`, starts the mocks, runs the suite and publishes the results: the **FR compliance results** check (one annotation per failed scenario), a summary comment on pull requests, and the `fr-compliance-report` artifact (HTML, JUnit XML, Cucumber messages) |
+| Docker images | Builds the mock and test-runner images and runs the suite with `docker compose`, as documented above (`fr-compliance-report-docker` artifact) |
+| Publish report to GitHub Pages | On `main` only: publishes the latest HTML report. Requires Settings > Pages > Source: **GitHub Actions** |
+
 ### Testing your own implementation
 
 | Variable | Default | Purpose |
