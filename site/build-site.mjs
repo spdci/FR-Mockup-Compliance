@@ -40,9 +40,17 @@ mkdirSync(path.join(out, 'report'), { recursive: true });
 // API reference
 // ---------------------------------------------------------------------------
 const specText = readFileSync(path.join(root, 'docs', 'openapi', SPEC), 'utf8');
-writeFileSync(path.join(out, 'api', SPEC), specText);
-
 const spec = YAML.parse(specText);
+
+// The spec is written for Redoc: besides the endpoint tags (Async, Sync) it declares one tag per
+// schema whose description is a Redoc-only <SchemaDefinition /> component, grouped by x-tagGroups.
+// Swagger UI renders those as empty sections, so the published copies keep only the tags used by
+// an operation (the schemas are listed in Swagger's "Schemas" section).
+const usedTags = new Set(Object.values(spec.paths).flatMap((item) => Object.values(item).flatMap((op) => op?.tags ?? [])));
+spec.tags = (spec.tags ?? []).filter((t) => usedTags.has(t.name));
+delete spec['x-tagGroups'];
+writeFileSync(path.join(out, 'api', SPEC), YAML.stringify(spec, { aliasDuplicateObjects: false, lineWidth: 0 }));
+
 const mock = structuredClone(spec);
 mock.info.title = `${spec.info.title} (local mock)`;
 mock.info.description = [
